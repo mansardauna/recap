@@ -5,29 +5,41 @@ import PropTest from './component/propTest';
 import Testprops from './component/Testprops';
 import { useState } from 'react'
 
-const App = () => {
-  const [counter, setCounter] = useState(0)
-
-  // const handleClick = () => {
-  //   setCounter(counter + 1)
-
+const App = (props) => {
+  const { notes } = props
 
   return (
     <div>
-      <div>{counter}</div>
-      <button onClick={() => setCounter(counter + 1)}>
-        plus
-      </button>
-
-      <button onClick={() => setCounter(0)}>
-        reset
-      </button>
-
-      <button onClick={() => setCounter(counter - 1)}>
-        minus
-      </button>
+      <h1>Notes</h1>
+      <ul>
+        <li>{notes[0].content}</li>
+        <li>{notes[1].content}</li>
+        <li>{notes[2].content}</li>
+      </ul>
     </div>
   )
 }
+
+const notes = [
+  {
+    id: 1,
+    content: 'HTML is easy',
+    date: '2019-05-30T17:30:31.098Z',
+    important: true
+  },
+  {
+    id: 2,
+    content: 'Browser can execute only JavaScript',
+    date: '2019-05-30T18:39:34.091Z',
+    important: false
+  },
+  {
+    id: 3,
+    content: 'GET and POST are the most important methods of HTTP protocol',
+    date: '2019-05-30T19:20:14.298Z',
+    important: true
+  }
+]
+
 
 export default App
