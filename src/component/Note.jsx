@@ -2,9 +2,11 @@ import React from "react";
 import { ReactDOM } from "react-dom";
 import App from '../App';
 
-const Note = () => {
+const Note = ({ note }) => {
   return (
-    <div>{course}</div>
+    note.map(notes =>
+      <li key={notes.id}>{notes.content}</li>
+    )
   )
 }
 
