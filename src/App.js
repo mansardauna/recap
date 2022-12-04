@@ -5,41 +5,38 @@ import PropTest from './component/propTest';
 import Testprops from './component/Testprops';
 import { useState } from 'react'
 
-const App = (props) => {
-  const { notes } = props
 
+const App = (props) => {
+  const { course } = props
   return (
     <div>
-      <h1>Notes</h1>
-      <ul>
-        <li>{notes[0].content}</li>
-        <li>{notes[1].content}</li>
-        <li>{notes[2].content}</li>
-      </ul>
+      <Course course={course} />
     </div>
   )
 }
-
-const notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
-    important: false
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
-    important: true
-  }
-]
+const Course = {
+  id: 1,
+  name: 'Half Stack application development',
+  parts: [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10,
+      id: 1
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7,
+      id: 2
+    },
+    {
+      name: 'State of a component',
+      exercises: 14,
+      id: 3
+    }
+  ]
+}
 
 
 export default App
+
+
