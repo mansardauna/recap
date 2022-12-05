@@ -4,10 +4,9 @@ import App from '../App';
 
 const Note = ({ note }) => {
   return (
-    note.map(notes =>
-      <li key={notes.id}>{notes.content}</li>
-    )
+    <li>{note.content}</li>
   )
+
 }
 
 export default Note

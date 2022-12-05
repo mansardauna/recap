@@ -5,30 +5,52 @@ import PropTest from './component/propTest';
 import Note from './component/Note';
 import { useState } from 'react'
 
-const App = () => {
-  const note = [
-    {
-      id: 1,
-      content: 'HTML is easy',
-      date: '2019-05-30T17:30:31.098Z',
-      important: true
-    },
-    {
-      id: 2,
-      content: 'Browser can execute only JavaScript',
-      date: '2019-05-30T18:39:34.091Z',
-      important: false
-    },
-    {
-      id: 3,
-      content: 'GET and POST are the most important methods of HTTP protocol',
-      date: '2019-05-30T19:20:14.298Z',
-      important: true
+const App = (props) => {
+  const [notes, setNotes] = useState(props.notes)
+  const [newNote, setNewNote] = useState('')
+  const [showAll, setShowAll] = useState(true)
+
+  const noteToShow = showAll
+    ? notes
+    : notes.filter(note => note.important === true)
+
+
+
+  const handleNoteChange = (event) => {
+    event.preventDefault()
+    setNewNote(event.target.value)
+    console.log(event.target.value)
+  }
+
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObj = {
+      content: newNote,
+      id: notes.lenght,
+
     }
-  ]
+    setNotes(notes.concat(noteObj))
+    setNewNote('')
+  }
 
 
-  return <Note note={note} />
+  return (<div>
+    <h1>Notes</h1>
+    <ul>
+      {noteToShow.map(note =>
+        <Note key={note.id} note={note} />
+      )}
+    </ul>
+    <form onSubmit={addNote}>
+      <input value={newNote}
+        onChange={handleNoteChange} />
+      <button type="submit">save</button>
+    </form>
+    <button onClick={() => setShowAll(!showAll)}>
+      show {showAll ? 'important' : 'all'}
+    </button>
+  </div>
+  )
 }
 
 export default App
