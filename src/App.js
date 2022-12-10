@@ -3,12 +3,21 @@ import './App.css';
 import './component/propTest'
 import PropTest from './component/propTest';
 import Note from './component/Note';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+
+  useEffect(() => {
+    axios
+      .get('http://localhost/3001/notes')
+      .then(response => {
+        setNotes(response.data)
+      })
+  }, [])
 
   const noteToShow = showAll
     ? notes
