@@ -19,7 +19,6 @@ const App = (props) => {
   const handleNoteChange = (event) => {
     event.preventDefault()
     setNewNote(event.target.value)
-    console.log(event.target.value)
   }
 
   const addNote = (event) => {
