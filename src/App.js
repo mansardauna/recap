@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import './component/propTest'
-import PropTest from './component/propTest';
-import Note from './component/Note';
 import { useState, useEffect } from 'react'
-import axios from 'axios';
+import Note from './component/Note.jsx'
+import noteService from './component/notes'
+
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
@@ -12,12 +12,39 @@ const App = (props) => {
   const [showAll, setShowAll] = useState(true)
 
   useEffect(() => {
-    axios
-      .get('http://localhost/3001/notes')
-      .then(response => {
-        setNotes(response.data)
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
       })
   }, [])
+
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+  }
+
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Math.random() > 0.5
+    }
+
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+        setNewNote('')
+      })
+  }
 
   const noteToShow = showAll
     ? notes
@@ -30,16 +57,6 @@ const App = (props) => {
     setNewNote(event.target.value)
   }
 
-  const addNote = (event) => {
-    event.preventDefault()
-    const noteObj = {
-      content: newNote,
-      id: notes.lenght,
-
-    }
-    setNotes(notes.concat(noteObj))
-    setNewNote('')
-  }
 
 
   return (<div>
